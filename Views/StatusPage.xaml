@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="Recycle.Views.StatusPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ctrl="clr-namespace:Recycle.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="752" 
+             d:DesignWidth="1240">
+    <UserControl.Resources>
+        <Style x:Key="styleTextBoxAd" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="IsReadOnly" Value="{Binding Source={StaticResource mainViewModel}, Path=CanAdjust, Converter={StaticResource covInverse}}"/>
+            <Style.Triggers>
+                <Trigger Property="IsReadOnly" Value="True">
+                    <Setter Property="Template" Value="{StaticResource tempReadOnlyTextBox}"/>
+                    <Setter Property="ctrl:TextBoxHelper.IsMonitoring" Value="False"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource styleTextHeader}" Margin="40,0" VerticalAlignment="Center" Text="Robot Name"/>
+        <ScrollViewer Grid.Row="1" >
+            <StackPanel Margin="0,0,0,28">
+                <UniformGrid Style="{StaticResource styleUniformGridMain}">
+                    <Border Style="{StaticResource styleWhiteBorder}" Height="488">
+                        <StackPanel>
+                            <ctrl:ParametersGroup Header="{DynamicResource strComRoboticArm}" Height="204" Items="{Binding ArmParameters}"/>
+                            <DockPanel Height="40" LastChildFill="False">
+                                <TextBlock Style="{StaticResource styleTextHeader}" Text="{DynamicResource strComMotionSettings}" VerticalAlignment="Center"/>
+                            </DockPanel>
+                            <Grid Margin="0,20,0,0" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="24"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="24"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Style="{StaticResource styleTextBoxAd}" ctrl:TextBoxHelper.Watermark="Max Speed" />
+                                <TextBox Style="{StaticResource styleTextBoxAd}" ctrl:TextBoxHelper.Watermark="Speed Rate" Text="190.542" Grid.Column="2"/>
+                                <TextBox Style="{StaticResource styleTextBoxAd}" ctrl:TextBoxHelper.Watermark="Line Rate" Grid.Column="4"/>
+                            </Grid>
+                            <Grid Margin="0,16,0,0" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="24"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="24"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="24"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Style="{StaticResource styleTextBoxAd}" ctrl:TextBoxHelper.Watermark="P2P Acc." />
+                                <TextBox Style="{StaticResource styleTextBoxAd}" ctrl:TextBoxHelper.Watermark="P2P Dsc." Grid.Column="2"/>
+                                <TextBox Style="{StaticResource styleTextBoxAd}" ctrl:TextBoxHelper.Watermark="Line Acc." Grid.Column="4"/>
+                                <TextBox Style="{StaticResource styleTextBoxAd}" ctrl:TextBoxHelper.Watermark="Line Dsc." Grid.Column="6"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource styleWhiteBorder}" Height="488">
+                        <Grid>
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type ctrl:AdvLabel}" BasedOn="{StaticResource {x:Type ctrl:AdvLabel}}">
+                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="88"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="88"/>
+                                <RowDefinition Height="88"/>
+                            </Grid.RowDefinitions>
+                            <DockPanel Grid.ColumnSpan="4" LastChildFill="False" Margin="0,0,0,16">
+                                <TextBlock Style="{StaticResource styleTextHeader}"
+                                           VerticalAlignment="Center"
+                                           Text="{DynamicResource strComConveyor}"/>
+                                <ctrl:StatusMark Status="ERROR"
+                                                 DockPanel.Dock="Right"
+                                                 VerticalAlignment="Center"/>
+                            </DockPanel>
+                            <ctrl:AdvLabel Text="46 cm/s" Description="Axis 1st" Grid.Row="1" />
+                            <TextBlock Style="{StaticResource styleTextHeader}"
+                                       Grid.Row="2"
+                                       Grid.ColumnSpan="4"
+                                       Text="{DynamicResource strComArm}"/>
+                            <ctrl:AdvLabel Text="-12.36" Description="X" Status="GOOD" Grid.Row="3"/>
+                            <ctrl:AdvLabel Text="-99.45" Description="Y" Status="GOOD" Grid.Row="3" Grid.Column="1"/>
+                            <ctrl:AdvLabel Text="-41.26" Description="Z" Status="GOOD" Grid.Row="3" Grid.Column="2"/>
+                            <ctrl:AdvLabel Text="46 cm/s" Description="Axis 1st" Status="GOOD" Grid.Row="4" />
+                            <ctrl:AdvLabel Text="-12.36" Description="Axis 2nd" Status="GOOD" Grid.Row="4" Grid.Column="1"/>
+                            <ctrl:AdvLabel Text="-99.45" Description="Axis 3rd" Status="GOOD" Grid.Row="4" Grid.Column="2"/>
+                        </Grid>
+                    </Border>
+                </UniformGrid>
+                <UniformGrid Style="{StaticResource styleUniformGridMain}">
+                    <Border Style="{StaticResource styleWhiteBorder}" Height="176" Background="Transparent">
+                    </Border>
+                    <Border Style="{StaticResource styleWhiteBorder}" Height="176">
+                        <StackPanel>
+                            <DockPanel LastChildFill="False">
+                                <TextBlock Text="{DynamicResource strComVisionSystem}" Style="{StaticResource styleTextHeader}"/>
+                                <ctrl:StatusMark Status="ERROR"
+                                                 DockPanel.Dock="Right"
+                                                 VerticalAlignment="Center"/>
+                            </DockPanel>
+                            <UniformGrid Rows="1" Margin="0,36,0,0">
+                                <ctrl:AdvLabel Text="Good" Description="{StaticResource strNaviStatus}"/>
+                                <ctrl:AdvLabel Text="7 days 17 hours" Description="Total Time"/>
+                                <ctrl:AdvLabel Text="2021/01/01" Description="Recently"/>
+                            </UniformGrid>
+                        </StackPanel>
+                    </Border>
+                </UniformGrid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
