@@ -2,9 +2,9 @@
 
 WPF UI 存取 MongoDB 的 CRUD 範例專案。
 
-### mongo db query cmd
+### WPF UI Main Page
 ![img_1.png](img_1.png)
-### mongo db restful cmd
+### mongo db 2 structure ::=> model / services
 ![img.png](img.png)
 
 
